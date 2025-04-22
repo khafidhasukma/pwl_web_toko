@@ -26,10 +26,8 @@ class AuthController extends BaseController
                     session()->set([
                         'username' => $dataUser['username'],
                         'role' => $dataUser['role'],
-                        'isLoggedIn' => TRUE
+                        'isLoggedIn' => true
                     ]);
-
-                    return redirect()->to(base_url('/'));
                 } else {
                     session()->setFlashdata('failed', 'Username & Password Salah');
                     return redirect()->back();
