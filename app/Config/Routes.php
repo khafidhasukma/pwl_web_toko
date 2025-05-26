@@ -13,6 +13,12 @@ $routes->get('login', 'AuthController::login');
 $routes->post('login', 'AuthController::login', ['filter' => 'redirect']);
 $routes->get('logout', 'AuthController::logout');
 
+$routes->group('produk-kategori', ['filter' => 'auth'], function ($routes) { 
+  $routes->get('', 'ProductCategoryController::index');
+  $routes->post('', 'ProductCategoryController::create');
+  $routes->post('edit/(:any)', 'ProductCategoryController::edit/$1');
+  $routes->get('delete/(:any)', 'ProductCategoryController::delete/$1');
+});
 $routes->group('produk', ['filter' => 'auth'], function ($routes) { 
   $routes->get('', 'ProdukController::index');
   $routes->post('', 'ProdukController::create');
