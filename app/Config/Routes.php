@@ -35,3 +35,6 @@ $routes->group('keranjang', ['filter' => 'auth'], function ($routes) {
   $routes->get('delete/(:any)', 'TransaksiController::cart_delete/$1');
   $routes->get('clear', 'TransaksiController::cart_clear');
 });
+
+$routes->get('profile', 'Home::profile', ['filter' => 'auth']);
+$routes->get('contact', 'Home::contact', ['filter' => 'auth']);
