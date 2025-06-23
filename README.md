@@ -41,7 +41,7 @@ Proyek ini adalah platform toko online yang dibangun menggunakan [CodeIgniter 4]
 1. **Clone repository ini**
    ```bash
    git clone [URL repository]
-   cd belajar-ci-tugas
+   cd pwl_web_toko
    ```
 2. **Install dependensi**
    ```bash
