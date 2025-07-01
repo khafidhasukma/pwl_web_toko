@@ -15,6 +15,8 @@
       <button type="submit" title="Search"><i class="bi bi-search"></i></button>
     </form>
   </div><!-- End Search Bar -->
+
+  <!-- Diskon hari ini -->
   <?php if (session()->get('diskon_nominal')): ?>
   <small class="bg-success text-white p-2 rounded rounded-lg mb-0">
     <i class="bi bi-tag"></i> Diskon Hari Ini:

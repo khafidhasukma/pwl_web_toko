@@ -36,6 +36,7 @@ class Filters extends BaseFilters
         'performance'   => PerformanceMetrics::class,
         'auth'          => \App\Filters\Auth::class,
         'redirect'      => \App\Filters\Redirect::class,
+        'checkDiskon' => \App\Filters\DiskonCheckFilter::class,
     ];
 
     /**
@@ -74,6 +75,7 @@ class Filters extends BaseFilters
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
+            'checkDiskon',
         ],
         'after' => [
             // 'honeypot',
