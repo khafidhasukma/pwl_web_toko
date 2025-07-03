@@ -80,10 +80,11 @@
             <?= $item1->alamat; ?>
           </td>
           <td>
-            <?= $item1->total_harga; ?>
+            <?= 'Rp' . number_format($item1->total_harga, 0, ',', '.'); ?> <br>
+            (<?= $item1->jumlah_item ?? 0; ?> item)
           </td>
           <td>
-            <?= $item1->ongkir; ?>
+            <?= 'Rp' . number_format($item1->ongkir, 0, ',', '.'); ?>
           </td>
           <td>
             <?= $item1->status; ?>
