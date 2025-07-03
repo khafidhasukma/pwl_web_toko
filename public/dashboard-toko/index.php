@@ -87,7 +87,17 @@
             <?= 'Rp' . number_format($item1->ongkir, 0, ',', '.'); ?>
           </td>
           <td>
-            <?= $item1->status; ?>
+            <?php
+              if ($item1->status == 0) {
+                echo 'Belum Selesai';
+              } elseif ($item1->status == 1) {
+                echo 'Diproses';
+              } elseif ($item1->status == 2) {
+                echo 'Selesai';
+              } else {
+                echo 'Tidak Diketahui';
+              }
+            ?>
           </td>
           <td>
             <?= $item1->created_at; ?>
