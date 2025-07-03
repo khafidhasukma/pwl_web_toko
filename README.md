@@ -29,18 +29,32 @@ Proyek ini adalah platform toko online yang dibangun menggunakan [CodeIgniter 4]
   - Login/Register pengguna
   - Manajemen akun
 - UI Responsif dengan NiceAdmin template
+- Diskon Harian
+  - Sistem mengecek diskon berdasarkan tanggal saat login
+  - Diskon ditampilkan di header dan disimpan di session
+  - Diskon otomatis mengurangi harga produk saat ditambahkan ke keranjang dan disimpan dalam detail transaksi
+- Webservice API
+  - Endpoint REST API untuk mengakses data transaksi pembelian
+  - Digunakan oleh dashboard client (HTML statis)
+- Webservice Client (Dashboard)
+  - Mengambil data dari API menggunakan CURL
+  - Menampilkan jumlah item yang dibeli dan data transaksi
+- Integrasi Ongkir (RajaOngkir)
+  - Menggunakan endpoint pihak ketiga untuk mendapatkan ongkos kirim berdasarkan kota tujuan
+  - Otomatis menambahkan biaya ongkir ke total belanja
 
 ## Persyaratan Sistem
 
 - PHP >= 7.4
 - Composer
-- Web server (XAMPP)
+- Web server (XAMPP, Laragon, dll)
+- MySQL/MariaDB
 
 ## Instalasi
 
 1. **Clone repository ini**
    ```bash
-   git clone [URL repository]
+   git clone https://github.com/khafidhasukma/pwl_web_toko.git
    cd pwl_web_toko
    ```
 2. **Install dependensi**
@@ -64,6 +78,9 @@ Proyek ini adalah platform toko online yang dibangun menggunakan [CodeIgniter 4]
    ```bash
    php spark db:seed UserSeeder
    ```
+   ```bash
+   php spark db:seed DiskonSeeder
+   ```
 6. **Jalankan server**
    ```bash
    php spark serve
@@ -75,15 +92,47 @@ Proyek ini adalah platform toko online yang dibangun menggunakan [CodeIgniter 4]
 
 Proyek menggunakan struktur MVC CodeIgniter 4:
 
-- app/Controllers - Logika aplikasi dan penanganan request
-  - AuthController.php - Autentikasi pengguna
-  - ProdukController.php - Manajemen produk
-  - TransaksiController.php - Proses transaksi
-- app/Models - Model untuk interaksi database
-  - ProductModel.php - Model produk
-  - UserModel.php - Model pengguna
-- app/Views - Template dan komponen UI
-  - v_produk.php - Tampilan produk
-  - v_keranjang.php - Halaman keranjang
-- public/img - Gambar produk dan aset
-- public/NiceAdmin - Template admin
+```├── app/
+│ ├── Config/ # Konfigurasi framework
+│ ├── Controllers/ # Controller utama
+│ │ ├── ApiController.php # REST API untuk dashboard eksternal
+│ │ ├── AuthController.php # Autentikasi pengguna
+│ │ ├── DiscountController.php # Manajemen diskon
+│ │ ├── ProductCategoryController.php# Kategori produk
+│ │ ├── ProdukController.php # Menampilkan produk
+│ │ └── TransaksiController.php # Keranjang & transaksi
+│ ├── Database/
+│ │ ├── Migrations/ # Struktur tabel DB
+│ │ └── Seeds/ # Seeder data awal
+│ │ ├── ProductSeeder.php
+│ │ ├── UserSeeder.php
+│ │ ├── DiskonSeeder.php
+│ │ └── ProductCategorySeeder.php
+│ ├── Filters/ # Filter middleware
+│ │ ├── Auth.php
+│ │ ├── DiskonCheckFilter.php
+│ │ └── Redirect.php
+│ ├── Models/ # Model untuk query DB
+│ │ ├── UserModel.php
+│ │ ├── ProductModel.php
+│ │ ├── TransactionModel.php
+│ │ ├── TransactionDetailModel.php
+│ │ └── DiscountModel.php
+│ ├── Views/ # View dan UI
+│ │ ├── components/ # Komponen UI
+│ │ ├── v_produk.php # Daftar produk
+│ │ ├── v_keranjang.php # Halaman keranjang
+│ │ ├── v_checkout.php # Halaman checkout
+│ │ ├── v_profile.php # Riwayat transaksi
+│ │ ├── v_discount.php # CRUD diskon (admin)
+│ │ ├── v_produkPDF.php # Export transaksi ke PDF
+│ │ └── layout.php / layout_clear.php# Template layout
+├── public/
+│ ├── img/ # Gambar produk
+│ ├── NiceAdmin/ # Template admin
+│ └── dashboard.html # Web dashboard statis (client API)
+├── .env # Konfigurasi environment
+├── composer.json # Dependensi project
+├── spark # CLI tool CI4
+├── README.md
+```
