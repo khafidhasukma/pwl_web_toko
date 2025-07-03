@@ -36,12 +36,19 @@ class TransaksiController extends BaseController
 
     public function cart_add()
     {
+        $diskon = session()->get('diskon_nominal') ?? 0;
+        $hargaAsli = (int) $this->request->getPost('harga');
+        $hargaSetelahDiskon = max(0, $hargaAsli - $diskon);
         $this->cart->insert(array(
             'id'        => $this->request->getPost('id'),
             'qty'       => 1,
-            'price'     => $this->request->getPost('harga'),
+            'price'     => $hargaSetelahDiskon,
             'name'      => $this->request->getPost('nama'),
-            'options'   => array('foto' => $this->request->getPost('foto'))
+            'options'   => [
+                'foto'        => $this->request->getPost('foto'),
+                'harga_asli'  => $hargaAsli,
+                'diskon'      => $diskon
+            ]
         ));
         session()->setflashdata('success', 'Produk berhasil ditambahkan ke keranjang. (<a href="' . base_url() . 'keranjang">Lihat</a>)');
         return redirect()->to(base_url('/'));
